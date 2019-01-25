@@ -14,8 +14,8 @@ class App extends Component {
         id:null,
         url:null,
         name:null,
-        price:null
-      },
+        price:null,
+      }
     }
     this.componentDidMount= this.componentDidMount.bind(this)
     this.grabFormData=this.grabFormData.bind(this)
@@ -29,6 +29,9 @@ class App extends Component {
       })
     })
   }
+  
+  
+
 
   grabFormData(id,url,name,price){
     this.setState({
