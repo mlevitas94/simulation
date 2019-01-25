@@ -7,9 +7,23 @@ class Form extends Component {
         this.state = {
             url:'',
             productName: '',
-            price: ''
+            price: '',
+            id: null,
+            changeButton: false
+        }
+        this.switchButtons=this.switchButtons.bind(this)
+    }
+    componentDidUpdate(old){
+        if(JSON.stringify(old.toEdit) !== JSON.stringify(this.props.toEdit)){
+            this.setState({
+                id:this.props.toEdit.id,
+                url: this.props.toEdit.url,
+                productName: this.props.toEdit.name,
+                price: this.props.toEdit.price
+            })
         }
     }
+
     updateUrl(val){
         this.setState({
             url:val
@@ -48,6 +62,18 @@ class Form extends Component {
             this.props.get()
         })
     }
+
+    switchButtons(){
+       if(this.state.changeButton === true){
+           this.setState({
+               changeButton:false
+           })
+       }else {
+           this.setState({
+               changeButton:true
+           })
+       }
+    }
   render() {
     return (
       <div className="App">
@@ -71,7 +97,21 @@ class Form extends Component {
 
         <button onClick={() => this.resetInputs()}>cancel</button>
 
-        <button onClick={() => this.addProduct(this.state.url, this.state.productName, this.state.price)}>Add to Inventory</button>
+        <div>
+            <button style={{display: this.state.changeButton ? 'none' : 'inline-block'}} onClick={() => {
+                this.addProduct(this.state.url, this.state.productName, this.state.price);
+                this.switchButtons()
+                }}>Add to Inventory</button>
+            <button style={{display: this.state.changeButton ? 'inline-block' : 'none'}}
+                onClick={() => {
+                    this.switchButtons();
+                    this.resetInputs();
+                 }}
+            
+            >Save changes</button>
+
+
+        </div>
 
       </div>
     );

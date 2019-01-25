@@ -28,6 +28,7 @@ class Dashboard extends Component {
         name={item.name}
         price={item.price}
         delete={this.deleteItem}
+        grabInfo={this.props.getData}
         />
        )
    })

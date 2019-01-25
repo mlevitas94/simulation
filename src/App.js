@@ -9,9 +9,16 @@ class App extends Component {
   constructor(){
     super()
     this.state={
-      inventory: []
+      inventory: [],
+      selectedToEdit : {
+        id:null,
+        url:null,
+        name:null,
+        price:null
+      },
     }
     this.componentDidMount= this.componentDidMount.bind(this)
+    this.grabFormData=this.grabFormData.bind(this)
   }
   
   componentDidMount(){
@@ -22,17 +29,30 @@ class App extends Component {
       })
     })
   }
+
+  grabFormData(id,url,name,price){
+    this.setState({
+      selectedToEdit: {
+        id:id,
+        url:url,
+        name:name,
+        price:price
+      }
+    })
+  }
   render() {
-    console.log(this.state.inventory)
+    console.log(this.state.selectedToEdit)
     return (
       <div className="App">
        <Header/>
         <div className="container">
           <Dashboard 
+          getData = {this.grabFormData}
           inventory={this.state.inventory}
           get = {this.componentDidMount}
           />
-          <Form 
+          <Form
+          toEdit = {this.state.selectedToEdit} 
           get={this.componentDidMount}
           
           />
